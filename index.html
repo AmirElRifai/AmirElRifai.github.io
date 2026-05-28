@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amir El Rifai, AI & Business Strategist</title>
+  <meta name="description" content="Amir El Rifai, Master's student at SKEMA Business School specializing in AI for Business Transformation. Building ML systems, AI products, and data-driven solutions." />
+  <meta name="keywords" content="Amir El Rifai, AI, Machine Learning, Data Science, SKEMA, Business Transformation, Deep Learning, NLP" />
+  <meta property="og:title" content="Amir El Rifai, AI & Business Strategist" />
+  <meta property="og:description" content="Building intelligent systems at the intersection of AI and business." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --bg:         #B2BEB5;
+      --bg-2:       #a9b6ad;
+      --bg-3:       #9fada5;
+      --surface:    #cdd5cf;
+      --surface-2:  #c4cdc6;
+      --border:     rgba(0, 0, 0, 0.1);
+      --border-2:   rgba(0, 0, 0, 0.22);
+      --gold:       #1a1a1a;
+      --gold-light: #000000;
+      --gold-dim:   rgba(0, 0, 0, 0.06);
+      --text:       #111111;
+      --text-2:     #3d3d3d;
+      --text-3:     #6b7570;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --mono:       'DM Mono', monospace;
+      --sans:       'Outfit', sans-serif;
+      --radius:     3px;
+      --transition: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ───────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    .cursor.hover { width: 14px; height: 14px; background: var(--gold-light); }
+    .cursor-ring.hover { width: 52px; height: 52px; border-color: var(--gold); }
+
+    /* ── NOISE OVERLAY ───────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── SCROLLBAR ───────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #555; border-radius: 2px; }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background var(--transition), padding var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(159, 173, 165, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); font-style: normal; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--text);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #111;
+      text-decoration: none;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: rgba(210,220,213,0.85);
+      padding: 8px 20px;
+      border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .nav-cta:hover {
+      background: #cdd5cf;
+      border-color: rgba(0,0,0,0.35);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--text); transition: all 0.3s; }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(0,0,0,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,0,0,0.03) 0%, transparent 70%);
+    }
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--text);
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.35s forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--text);
+    }
+    .hero-tagline {
+      font-family: var(--sans);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-tagline strong { color: var(--text); font-weight: 400; }
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.65s forwards;
+    }
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111;
+      background: #cdd5cf;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(0,0,0,0.15);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #bcc7bf;
+      transform: translateX(-100%);
+      transition: transform var(--transition);
+    }
+    .btn-primary:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.13); }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      text-decoration: none;
+      padding: 14px 32px;
+      border: 1px solid rgba(0,0,0,0.25);
+      border-radius: var(--radius);
+      background: transparent;
+      transition: all var(--transition);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(0,0,0,0.5); background: rgba(210,220,213,0.5); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+    .hero-scroll span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+    .hero-badge {
+      position: absolute;
+      right: 80px;
+      bottom: 80px;
+      opacity: 0;
+      animation: fadeIn 1s 1s forwards;
+    }
+    .hero-badge-inner {
+      width: 120px; height: 120px;
+      border: 1px solid var(--border-2);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      position: relative;
+    }
+    .hero-badge-inner::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      animation: rotateSlow 20s linear infinite;
+      background: conic-gradient(rgba(0,0,0,0.12) 0deg, transparent 120deg, rgba(0,0,0,0.12) 240deg, transparent 360deg);
+    }
+    .badge-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+    }
+    .badge-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-align: center;
+    }
+    @keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+    /* ── SECTION BASE ─────────────────────────────────────── */
+    section { padding: 120px 60px; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--text-3);
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 60px;
+    }
+    .section-title em { font-style: italic; color: var(--text); }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* ── ABOUT ───────────────────────────────────────────── */
+    #about {
+      background: var(--bg-2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-left .section-title { margin-bottom: 32px; }
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+    .about-text strong { color: var(--text); font-weight: 400; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--surface);
+      transition: border-color var(--transition), background var(--transition);
+      text-align: center;
+    }
+    .stat-card:hover { border-color: var(--border-2); background: var(--surface-2); }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .about-right { padding-top: 60px; display: flex; flex-direction: column; align-items: center; }
+    .about-avatar {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      border: 3px solid rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+    .about-avatar::before { display: none; }
+    .avatar-initials {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--text);
+    }
+    .about-info-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .about-info-list li {
+      display: flex;
+      gap: 16px;
+      font-size: 0.92rem;
+      color: var(--text-2);
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-info-list li:last-child { border-bottom: none; }
+    .info-key {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      min-width: 80px;
+      padding-top: 2px;
+    }
+    .info-val { color: var(--text); }
+
+    /* ── PROJECTS ─────────────────────────────────────────── */
+    #projects { background: var(--bg); }
+    .projects-intro {
+      max-width: 560px;
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 64px;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .project-card {
+      background: var(--surface);
+      padding: 40px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+      text-decoration: none;
+      display: block;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(0,0,0,0.04), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .project-card:hover { border-color: var(--border-2); background: var(--surface-2); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover::after { opacity: 1; }
+    .project-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--text-3);
+      margin-bottom: 24px;
+    }
+    .project-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #444;
+      background: rgba(205,213,207,0.6);
+      border: 1px solid rgba(0,0,0,0.15);
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .project-tech {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tech-pill {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      color: var(--text-3);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .project-arrow {
+      font-size: 1.1rem;
+      color: var(--text-3);
+      transition: all var(--transition);
+    }
+    .project-card:hover .project-arrow { color: var(--gold); transform: translate(3px, -3px); }
+    .project-card.featured { grid-column: span 2; }
+    .projects-grid .project-card:last-child:nth-child(3n+1) { grid-column: span 3; }
+    .projects-grid .project-card:last-child:nth-child(3n-1) { grid-column: span 2; }
+
+    /* ── SKILLS ───────────────────────────────────────────── */
+    #skills { background: var(--bg-2); }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .skills-nav { position: sticky; top: 100px; }
+    .skill-category-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px 20px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      cursor: pointer;
+      border-left: 2px solid var(--border);
+      transition: all var(--transition);
+    }
+    .skill-category-btn:hover,
+    .skill-category-btn.active {
+      color: #111;
+      border-left-color: #111;
+      background: rgba(210,220,213,0.6);
+    }
+    .skills-panels { }
+    .skills-panel { display: none; }
+    .skills-panel.active { display: block; }
+    .skills-group { margin-bottom: 40px; }
+    .skills-group-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text-2);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-bars { display: flex; flex-direction: column; gap: 16px; }
+    .skill-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 200px) 1fr 40px;
+      align-items: center;
+      gap: 16px;
+    }
+    .skill-name {
+      font-size: 0.88rem;
+      color: var(--text-2);
+    }
+    .skill-bar-track {
+      height: 3px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, #1a1a1a, #555);
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .skill-pct {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-3);
+      text-align: right;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .skill-tag:hover { color: #111; border-color: rgba(0,0,0,0.35); background: #cdd5cf; }
+
+    /* ── TIMELINE (Experience & Education) ────────────────── */
+    #timeline { background: var(--bg); }
+    .timeline-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      width: fit-content;
+      margin-bottom: 60px;
+    }
+    .timeline-tab {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      background: none;
+      border: none;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .timeline-tab.active {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+    .timeline-content { display: none; }
+    .timeline-content.active { display: block; }
+    .timeline-list { position: relative; padding-left: 32px; }
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -35px; top: 6px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.3);
+    }
+    .timeline-period {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .timeline-org {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+    .timeline-desc {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.75;
+    }
+    .timeline-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+    /* ── CONTACT ──────────────────────────────────────────── */
+    #contact {
+      background: var(--bg-2);
+      text-align: center;
+    }
+    .contact-inner { max-width: 640px; margin: 0 auto; }
+    .contact-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+    .contact-methods {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .contact-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 28px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      background: var(--surface);
+      transition: all var(--transition);
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .contact-card:hover { border-color: rgba(0,0,0,0.3); background: #cdd5cf; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .contact-icon { font-size: 1.4rem; }
+    .contact-platform {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .contact-handle { font-size: 0.88rem; color: var(--text); }
+    .contact-availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+    .availability-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+    }
+    .footer-back {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-back:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+
+    @media (max-width: 1100px) {
+      .skills-layout { grid-template-columns: 1fr; gap: 32px; }
+      .skills-nav { position: static; display: flex; gap: 8px; flex-wrap: wrap; }
+      .skill-category-btn { border-left: none; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; }
+      .skill-row { grid-template-columns: minmax(100px, 160px) 1fr 36px; gap: 12px; }
+    }
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(159, 173, 165, 0.98);
+        z-index: 99;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+      }
+      .mobile-menu.open { display: flex; transform: translateY(0); opacity: 1; }
+      .mobile-menu a {
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 300;
+        color: var(--text);
+        text-decoration: none;
+      }
+      #hero { padding: 0 24px; }
+      .hero-badge { display: none; }
+      section { padding: 80px 24px; }
+      #about { grid-template-columns: 1fr; gap: 48px; }
+      .about-right { padding-top: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: 1; }
+      .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+      .skills-nav { position: static; display: flex; gap: 8px; flex-wrap: wrap; }
+      .skill-category-btn { border-left: none; border: 1px solid var(--border); border-radius: var(--radius); }
+      .skill-row { grid-template-columns: 1fr 1fr 32px; gap: 8px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .cursor, .cursor-ring { display: none; }
+      body { cursor: auto; }
+    }
+    @media (max-width: 600px) {
+      .hero-name { font-size: 2.8rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .contact-methods { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+    <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+    <a href="#timeline" onclick="closeMobileMenu()">Journey</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">Amir <span>El Rifai</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#timeline">Journey</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" role="banner">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Based in Paris  ·  Open to Opportunities</div>
+      <h1 class="hero-name">
+        Where <em>Intelligence</em><br>Meets Strategy
+      </h1>
+      <p class="hero-tagline">
+        I'm <strong>Amir El Rifai</strong>, a Master's student in AI for Business Transformation at SKEMA, 
+        building machine learning systems, AI products, and data-driven solutions that 
+        <strong>move businesses forward</strong>.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary"><span>View My Work</span></a>
+        <a href="https://github.com/AmirElRifai" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-inner">
+        <div class="badge-num">7+</div>
+        <div class="badge-label">ML / AI<br>Projects</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="about-left">
+      <div class="section-label reveal">001  About</div>
+      <h2 class="section-title reveal reveal-delay-1" id="about-title">
+        A builder at the<br><em>edge of AI</em>
+      </h2>
+      <p class="about-text reveal reveal-delay-2">
+        I study and build at the intersection of <strong>artificial intelligence and business strategy</strong>. 
+        At SKEMA Business School, my Master's in AI for Business Transformation is not just theory; 
+        it is a launchpad. I spend my time engineering ML models, designing AI-powered products, 
+        and understanding how large language models actually work under the hood.
+      </p>
+      <p class="about-text reveal reveal-delay-3">
+        From training <strong>deep learning CNNs</strong> to building <strong>financial RAG pipelines</strong> and 
+        React frontends for AI tools, I operate across the full stack: technical enough to ship, strategic enough to lead. I believe the next decade will be defined by people who can 
+        do both.
+      </p>
+      <div class="about-stats">
+        <div class="stat-card reveal">
+          <div class="stat-num">7+</div>
+          <div class="stat-desc">AI/ML Projects</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-1">
+          <div class="stat-num">3+</div>
+          <div class="stat-desc">Languages & Frameworks</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-2">
+          <div class="stat-num">M2</div>
+          <div class="stat-desc">Master's Level</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-3">
+          <div class="stat-num">Bac+5</div>
+          <div class="stat-desc">Years of Academic Excellence</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right reveal">
+      <div class="about-avatar">
+        <img src="data:image/png;base64,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" alt="Amir El Rifai" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+      </div>
+      <ul class="about-info-list">
+        <li>
+          <span class="info-key">Location</span>
+          <span class="info-val">Paris, France</span>
+        </li>
+        <li>
+          <span class="info-key">Education</span>
+          <span class="info-val">SKEMA, MSc AI for Business Transformation</span>
+        </li>
+        <li>
+          <span class="info-key">Focus</span>
+          <span class="info-val">ML, Deep Learning, NLP, AI Products</span>
+        </li>
+        <li>
+          <span class="info-key">Languages</span>
+          <span class="info-val">Python · R · JavaScript / React</span>
+        </li>
+        <li>
+          <span class="info-key">Status</span>
+          <span class="info-val" style="color: #4ade80">● Open to opportunities</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects" aria-labelledby="projects-title">
+    <div class="section-label reveal">002  Work</div>
+    <h2 class="section-title reveal reveal-delay-1" id="projects-title">
+      Featured <em>Projects</em>
+    </h2>
+    <p class="projects-intro reveal reveal-delay-2">
+      A selection of technical work spanning machine learning research, AI product development, 
+      and data engineering , each built with real-world application in mind.
+    </p>
+
+    <div class="projects-grid">
+
+      <!-- Featured: Financial RAG -->
+      <a class="project-card featured reveal" href="https://github.com/AmirElRifai/Financial_RAG_NLP" target="_blank" rel="noopener">
+        <div class="project-num">01  Featured</div>
+        <div class="project-tag">NLP · RAG · LLM</div>
+        <h3 class="project-title">Financial RAG & NLP Pipeline</h3>
+        <p class="project-desc">
+          A Retrieval-Augmented Generation system built for financial data. Combines a vector database with 
+          an LLM to enable intelligent Q&A over financial documents, demonstrating practical AI application 
+          in a high-stakes domain where precision is non-negotiable.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">LangChain</span>
+            <span class="tech-pill">NLP</span>
+            <span class="tech-pill">RAG</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- PathFinder AI -->
+      <a class="project-card reveal reveal-delay-1" href="https://github.com/AmirElRifai" target="_blank" rel="noopener">
+        <div class="project-num">02</div>
+        <div class="project-tag">AI Product · React</div>
+        <h3 class="project-title">PathFinder AI</h3>
+        <p class="project-desc">
+          A complete frontend for an AI-powered student academic guidance tool. Built in React with Tailwind CSS, 
+          full component architecture, routing, and a production-ready project scaffold.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Tailwind</span>
+            <span class="tech-pill">AI UX</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Deep Learning CNN -->
+      <a class="project-card reveal reveal-delay-2" href="https://github.com/AmirElRifai/Deep-Learning-CNN" target="_blank" rel="noopener">
+        <div class="project-num">03</div>
+        <div class="project-tag">Deep Learning · CV</div>
+        <h3 class="project-title">CNN, Deep Learning Models</h3>
+        <p class="project-desc">
+          Implementation and evaluation of Convolutional Neural Networks on the MNIST dataset. 
+          Covers model architecture, training pipeline, performance benchmarking, and interpretation 
+          of results across multiple CNN configurations.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">TensorFlow</span>
+            <span class="tech-pill">Jupyter</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- ARIMA -->
+      <a class="project-card reveal" href="https://github.com/AmirElRifai/TimeSeries_ARIMA_Forecast" target="_blank" rel="noopener">
+        <div class="project-num">04</div>
+        <div class="project-tag">Time Series · Forecasting</div>
+        <h3 class="project-title">ARIMA Time Series Forecasting</h3>
+        <p class="project-desc">
+          End-to-end time series analysis using ARIMA modeling with predictive analytics, from 
+          stationarity testing and parameter tuning to out-of-sample forecasting and evaluation.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">statsmodels</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Clustering -->
+      <a class="project-card reveal reveal-delay-1" href="https://github.com/AmirElRifai/KMeans_Hierarchical_Clustering" target="_blank" rel="noopener">
+        <div class="project-num">05</div>
+        <div class="project-tag">Unsupervised ML</div>
+        <h3 class="project-title">K-Means & Hierarchical Clustering</h3>
+        <p class="project-desc">
+          Deep exploration of unsupervised learning techniques: K-Means and hierarchical clustering 
+          with full analysis of silhouette scores, dendrograms, and cluster interpretation.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">scikit-learn</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Laptop Price -->
+      <a class="project-card reveal reveal-delay-2" href="https://github.com/AmirElRifai/LaptopPrice_Analysis" target="_blank" rel="noopener">
+        <div class="project-num">06</div>
+        <div class="project-tag">Data Science · R</div>
+        <h3 class="project-title">Laptop Price Analysis</h3>
+        <p class="project-desc">
+          Full exploratory data analysis, dimensionality reduction via PCA/MCA, and regression modeling 
+          in R, translating raw hardware data into pricing insights and predictive models.
+        </p>
+        <div class="project-footer">
+          <div class="project-tech">
+            <span class="tech-pill">R</span>
+            <span class="tech-pill">PCA/MCA</span>
+            <span class="tech-pill">Regression</span>
+          </div>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills" aria-labelledby="skills-title">
+    <div class="section-label reveal">003  Expertise</div>
+    <h2 class="section-title reveal reveal-delay-1" id="skills-title">
+      Skills &amp; <em>Tools</em>
+    </h2>
+    <div class="skills-layout">
+      <nav class="skills-nav reveal" aria-label="Skill categories">
+        <button class="skill-category-btn active" onclick="showSkills('ml')" aria-pressed="true">Machine Learning</button>
+        <button class="skill-category-btn" onclick="showSkills('dev')" aria-pressed="false">Development</button>
+        <button class="skill-category-btn" onclick="showSkills('data')" aria-pressed="false">Data & Analytics</button>
+        <button class="skill-category-btn" onclick="showSkills('biz')" aria-pressed="false">AI Strategy</button>
+      </nav>
+
+      <div class="skills-panels reveal reveal-delay-1">
+
+        <div class="skills-panel active" id="panel-ml">
+          <div class="skills-group">
+            <div class="skills-group-title">Machine & Deep Learning</div>
+            <div class="skill-bars">
+              <div class="skill-row"><span class="skill-name">Python (ML/DL)</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div><span class="skill-pct">90%</span></div>
+              <div class="skill-row"><span class="skill-name">CNN / Deep Learning</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
+              <div class="skill-row"><span class="skill-name">scikit-learn</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div><span class="skill-pct">85%</span></div>
+              <div class="skill-row"><span class="skill-name">TensorFlow / Keras</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div><span class="skill-pct">75%</span></div>
+              <div class="skill-row"><span class="skill-name">NLP / RAG / LLMs</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
+              <div class="skill-row"><span class="skill-name">Clustering & Unsupervised</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div><span class="skill-pct">80%</span></div>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Frameworks & Libraries</div>
+            <div class="skill-tags">
+              <span class="skill-tag">NumPy</span>
+              <span class="skill-tag">Pandas</span>
+              <span class="skill-tag">Matplotlib</span>
+              <span class="skill-tag">Seaborn</span>
+              <span class="skill-tag">LangChain</span>
+              <span class="skill-tag">FAISS</span>
+              <span class="skill-tag">Jupyter</span>
+              <span class="skill-tag">OpenCV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-panel" id="panel-dev">
+          <div class="skills-group">
+            <div class="skills-group-title">Frontend Development</div>
+            <div class="skill-bars">
+              <div class="skill-row"><span class="skill-name">React</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
+              <div class="skill-row"><span class="skill-name">Tailwind CSS</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
+              <div class="skill-row"><span class="skill-name">HTML / CSS / JS</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div><span class="skill-pct">85%</span></div>
+              <div class="skill-row"><span class="skill-name">Python</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div><span class="skill-pct">90%</span></div>
+              <div class="skill-row"><span class="skill-name">R</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="72"></div></div><span class="skill-pct">72%</span></div>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Tools</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Git / GitHub</span>
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">Jupyter</span>
+              <span class="skill-tag">RStudio</span>
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">Notion</span>
+              <span class="skill-tag">Excel / VBA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-panel" id="panel-data">
+          <div class="skills-group">
+            <div class="skills-group-title">Data Science & Analytics</div>
+            <div class="skill-bars">
+              <div class="skill-row"><span class="skill-name">Exploratory Data Analysis</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div><span class="skill-pct">88%</span></div>
+              <div class="skill-row"><span class="skill-name">Regression & Forecasting</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
+              <div class="skill-row"><span class="skill-name">PCA / Dimensionality Reduction</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
+              <div class="skill-row"><span class="skill-name">Time Series Analysis</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div><span class="skill-pct">80%</span></div>
+              <div class="skill-row"><span class="skill-name">Data Visualization</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="84"></div></div><span class="skill-pct">84%</span></div>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Concepts</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Statistical Inference</span>
+              <span class="skill-tag">Feature Engineering</span>
+              <span class="skill-tag">Model Evaluation</span>
+              <span class="skill-tag">Cross-Validation</span>
+              <span class="skill-tag">ARIMA / SARIMA</span>
+              <span class="skill-tag">Fraud Detection</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-panel" id="panel-biz">
+          <div class="skills-group">
+            <div class="skills-group-title">AI Strategy & Business</div>
+            <div class="skill-bars">
+              <div class="skill-row"><span class="skill-name">EU AI Act & Compliance</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div><span class="skill-pct">80%</span></div>
+              <div class="skill-row"><span class="skill-name">AI Risk Assessment</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
+              <div class="skill-row"><span class="skill-name">Business Transformation</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
+              <div class="skill-row"><span class="skill-name">AI Product Strategy</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="76"></div></div><span class="skill-pct">76%</span></div>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Domain Knowledge</div>
+            <div class="skill-tags">
+              <span class="skill-tag">LLM Architecture</span>
+              <span class="skill-tag">AI Ethics</span>
+              <span class="skill-tag">Financial AI</span>
+              <span class="skill-tag">EdTech AI</span>
+              <span class="skill-tag">Fraud Detection</span>
+              <span class="skill-tag">AI Governance</span>
+              <span class="skill-tag">Remote Banking</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <section id="timeline" aria-labelledby="timeline-title">
+    <div class="section-label reveal">004  Journey</div>
+    <h2 class="section-title reveal reveal-delay-1" id="timeline-title">
+      Education &amp; <em>Experience</em>
+    </h2>
+
+    <div class="timeline-tabs reveal reveal-delay-2">
+      <button class="timeline-tab active" onclick="showTab('education')" aria-pressed="true">Education</button>
+      <button class="timeline-tab" onclick="showTab('experience')" aria-pressed="false">Experience</button>
+    </div>
+
+    <div class="timeline-content active" id="tab-education">
+      <div class="timeline-list">
+        <div class="timeline-item">
+          <div class="timeline-period">2024 – 2026</div>
+          <div class="timeline-role">MSc AI for Business Transformation</div>
+          <div class="timeline-org">SKEMA Business School · Paris, France</div>
+          <div class="timeline-desc">
+            Master's level specialization bridging machine learning, deep learning, and business strategy.
+            Coursework spans LLM architecture, the EU AI Act, intelligent agents, ML for business applications,
+            and AI ethics. Hands-on projects in Python, R, and React throughout.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Deep Learning</span>
+            <span class="tech-pill">NLP</span>
+            <span class="tech-pill">EU AI Act</span>
+            <span class="tech-pill">AI Strategy</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">2021 – 2024</div>
+          <div class="timeline-role">Bachelor's in Applied Mathematics & Computer Science for Social and Human Sciences</div>
+          <div class="timeline-org">Paul Valéry University, Montpellier 3</div>
+          <div class="timeline-desc">
+            Ranked in the top 10 of the class, graduated with honors. Built a rigorous foundation in mathematics, 
+            statistics, algorithms, and computational methods applied to social and human sciences, the technical 
+            bedrock underpinning everything built since.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">Mathematics</span>
+            <span class="tech-pill">Statistics</span>
+            <span class="tech-pill">Computer Science</span>
+            <span class="tech-pill">Top 10 of class</span>
+            <span class="tech-pill">Honors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-content" id="tab-experience">
+      <div class="timeline-list">
+
+        <div class="timeline-item">
+          <div class="timeline-period">Sep 2024 – May 2025 · Sep 2025 – Apr 2026</div>
+          <div class="timeline-role">Assistant at the Digital Hub</div>
+          <div class="timeline-org">SKEMA Business School</div>
+          <div class="timeline-desc">
+            Assisted users of digital and AI platforms and participated in Explainable AI (XAI) projects.
+            Created communication materials including infographics, newsletters, and visuals to showcase
+            the Hub's work in AI and digital transformation. Supported data analysis and technical
+            indicator tracking to optimize processes and performance monitoring.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">XAI</span>
+            <span class="tech-pill">AI Platforms</span>
+            <span class="tech-pill">Data Analysis</span>
+            <span class="tech-pill">Communication</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-period">Jun 2025 – Jul 2025</div>
+          <div class="timeline-role">Project Manager Intern</div>
+          <div class="timeline-org">RAISE Summit</div>
+          <div class="timeline-desc">
+            Cleaned and structured datasets to optimize buyer tracking and improve marketing analysis quality.
+            Designed Excel dashboards and performance indicators to identify new prospects and monitor
+            conversion rates. Conducted post-event analyses to uncover engagement trends and recommend
+            operational improvements.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">Data Cleaning</span>
+            <span class="tech-pill">Excel Dashboards</span>
+            <span class="tech-pill">Marketing Analytics</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-period">May 2024 – Jun 2024</div>
+          <div class="timeline-role">Artificial Intelligence Intern</div>
+          <div class="timeline-org">DELL Technologies</div>
+          <div class="timeline-desc">
+            Developed FaceGen, an AI system capable of generating realistic face images from textual
+            descriptions. Applied PyTorch and other ML frameworks to design and fine-tune models
+            with a focus on precision and explainability. Presented the project to internal teams
+            and AI experts, showcasing the potential of open-source technologies for image generation.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">PyTorch</span>
+            <span class="tech-pill">Generative AI</span>
+            <span class="tech-pill">Computer Vision</span>
+            <span class="tech-pill">XAI</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-period">Jun 2023 – Jul 2023</div>
+          <div class="timeline-role">Finance and Accounting Intern</div>
+          <div class="timeline-org">Mazars</div>
+          <div class="timeline-desc">
+            Performed financial analyses and contributed to the preparation of company valuation reports.
+            Assisted in accounting follow-up and financial statement verification under the supervision
+            of senior auditors.
+          </div>
+          <div class="timeline-tags">
+            <span class="tech-pill">Financial Analysis</span>
+            <span class="tech-pill">Valuation</span>
+            <span class="tech-pill">Audit</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="contact-inner">
+      <div class="section-label reveal" style="justify-content: center;">005  Contact</div>
+      <h2 class="section-title reveal reveal-delay-1" id="contact-title">
+        Let's build something<br><em>worth building</em>
+      </h2>
+      <p class="contact-intro reveal reveal-delay-2">
+        Whether you're working on an AI product, looking for a sharp technical collaborator, 
+        or want to talk about the future of intelligent systems, my inbox is open.
+      </p>
+      <div class="contact-methods reveal reveal-delay-2">
+        <a href="mailto:amirerlifai@icloud.com" class="contact-card">
+          <span class="contact-icon">✉</span>
+          <span class="contact-platform">Email</span>
+          <span class="contact-handle" style="font-size:0.75rem; word-break:break-all; text-align:center;">amirerlifai@icloud.com</span>
+        </a>
+        <a href="https://linkedin.com/in/amir-el-rifai" target="_blank" rel="noopener" class="contact-card">
+          <span class="contact-icon">in</span>
+          <span class="contact-platform">LinkedIn</span>
+          <span class="contact-handle">amir-el-rifai</span>
+        </a>
+        <a href="https://github.com/AmirElRifai" target="_blank" rel="noopener" class="contact-card">
+          <span class="contact-icon">⌥</span>
+          <span class="contact-platform">GitHub</span>
+          <span class="contact-handle">AmirElRifai</span>
+        </a>
+      </div>
+      <div class="contact-availability reveal reveal-delay-3">
+        <span class="availability-dot"></span>
+        <span>Available for internships, collaborations & AI roles</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2026 Amir El Rifai · Designed &amp; built with purpose</div>
+    <a href="#hero" class="footer-back">Back to top ↑</a>
+  </footer>
+
+  <script>
+    // ── CURSOR ─────────────────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); cursorRing.classList.add('hover'); });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); cursorRing.classList.remove('hover'); });
+    });
+
+    // ── NAV SCROLL ─────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── MOBILE MENU ────────────────────────────────────────
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+
+    // ── REVEAL ON SCROLL ───────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── TIMELINE ITEMS ─────────────────────────────────────
+    const timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 150);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.timeline-item').forEach(el => timelineObserver.observe(el));
+
+    // ── SKILL BARS ─────────────────────────────────────────
+    function animateBars() {
+      document.querySelectorAll('.skills-panel.active .skill-bar-fill').forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => { bar.style.width = width + '%'; }, 100);
+      });
+    }
+    animateBars();
+
+    // ── SKILLS TAB ─────────────────────────────────────────
+    function showSkills(id) {
+      document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.skill-category-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      document.querySelectorAll('.skill-bar-fill').forEach(b => b.style.width = '0');
+
+      document.getElementById('panel-' + id).classList.add('active');
+      event.target.classList.add('active');
+      event.target.setAttribute('aria-pressed', 'true');
+      animateBars();
+    }
+
+    // ── TIMELINE TABS ──────────────────────────────────────
+    function showTab(id) {
+      document.querySelectorAll('.timeline-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.timeline-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+
+      document.getElementById('tab-' + id).classList.add('active');
+      event.target.classList.add('active');
+      event.target.setAttribute('aria-pressed', 'true');
+
+      // Re-trigger timeline animations
+      document.querySelectorAll('#tab-' + id + ' .timeline-item').forEach((el, i) => {
+        el.classList.remove('visible');
+        setTimeout(() => el.classList.add('visible'), i * 150 + 100);
+      });
+    }
+
+    // Initial timeline visibility
+    setTimeout(() => {
+      document.querySelectorAll('#tab-education .timeline-item').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 200);
+      });
+    }, 400);
+  </script>
+</body>
+</html>
